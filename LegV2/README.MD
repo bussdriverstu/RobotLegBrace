@@ -32,6 +32,10 @@ Instructions for installing CircuitPython on the microcontroller can be found he
 
 After installing, you should be able to copy 'code.py' and the entire 'lib' folder from this repository into the root directory of the microcontroller and you'll be done. Again, I am not a programmer, but I commented what most of it does to the best of my ability. 
 
+## Design/Wiring Diagram
+
+![LegV2 Diagram](robotlegv2design.png)
+
 ## Materials List for building Robot Leg Brace Version 2
 
 Brace https://www.amazon.com/gp/product/B07BT59Q6X
