@@ -49,8 +49,7 @@ After installing, you should be able to copy 'code.py' and the entire 'lib' fold
 - Adafruit QT Py RP2040 https://www.adafruit.com/product/4900
 - Adafruit BNO085 9-DOF Orientation Sensor https://www.adafruit.com/product/4754
 - STEMMA QT Cable https://www.adafruit.com/product/4399
-
-1k Ohm Resistors https://www.amazon.com/MCIGICM-Values-Resistor-Assortment-Resistors/dp/B06WRQS97C/
+- 1k Ohm Resistors https://www.amazon.com/MCIGICM-Values-Resistor-Assortment-Resistors/dp/B06WRQS97C/
 
 ## Notes
 
