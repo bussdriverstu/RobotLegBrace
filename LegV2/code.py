@@ -11,6 +11,11 @@ import pwmio
 from adafruit_motor import servo
 import digitalio
 
+# Button for brightness control of on-board LED
+ledButton = digitalio.DigitalInOut(board.BUTTON)
+ledButton.switch_to_input(pull=digitalio.Pull.UP)
+ledBrightness = 0.01
+
 # Bend Button
 button = digitalio.DigitalInOut(board.RX)
 button.switch_to_input(pull=digitalio.Pull.DOWN)
@@ -47,24 +52,37 @@ def sendSignal(position):
         lastValue = position
         print("Signal Sent")
 
+def changeBrightness():
+    global ledBrightness
+    if (ledBrightness == 0.0): # I guess python doesn't have case-switch. Anyway, this modifies the value of ledBrightness which is then used as a multiplier for brightness. 0 = off, .01 = 10%, .5 = 50%, 1 = 100%
+        ledBrightness = 0.01
+    elif (ledBrightness == 0.01):
+        ledBrightness = 0.5
+    elif (ledBrightness == 0.5):
+        ledBrightness = 1.0
+    else:
+        ledBrightness = 0.0
+
 servo.angle = down # start leg in straight position on boot
 
 while True:
-    pixels.fill(colorwheel(potentiometer_to_color(potentiometer.value))) # Changes led colors on slider based on the position of the potentiometer.
-    threshold = potentiometer_to_threshold(potentiometer.value)
-    print(str(threshold))
-    try:
+    try:   
+        pixels.fill(colorwheel(potentiometer_to_color(potentiometer.value))) # Changes led colors on slider based on the position of the potentiometer.
+        threshold = potentiometer_to_threshold(potentiometer.value)
+        print(str(threshold))
+        if not ledButton.value: # If the on-board button is pressed, it will change the brightness multiplier for on-board LED. Values are off, dim, medium, bright.
+            changeBrightness()
         accel_x, accel_y, accel_z = bno.acceleration
         print("X: %0.6f  Y: %0.6f Z: %0.6f  m/s^2" % (accel_x, accel_y, accel_z))
         if (accel_z > -4 and accel_z < 4): # Checking to make sure the leg is upright in case use has fallen over
             if (accel_y > threshold or button.value): # Checks if the accelerometer reading is greater than the threshold set by the slider position or if the button is pressed, then bends the leg if either are true.
                 print("bend")
                 sendSignal(up)
-                onboardpixels.fill((10, 0, 0)) # On board led turns red when bending
+                onboardpixels.fill((255 * ledBrightness, 0, 0)) # On board led turns red when bending, brightness determined by on-board button
             else: # Straightens the leg
                 print("straight")
                 sendSignal(down)
-                onboardpixels.fill((0, 10, 0)) # On board led turns green when straight
+                onboardpixels.fill((0, 255 * ledBrightness, 0)) # On board led turns green when straight, brightness determined by on-board button
         else:
             print("you fell over, clumsy nerd")
     except:
