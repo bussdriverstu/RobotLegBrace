@@ -5,7 +5,7 @@ Hi. I’ve been handicapped for about 8 years now. I’ve tried to seek out trea
 
 ## Injury and Ability
 
-My injury is unique and so my solution may not apply to you. I have full motion on my left leg, and I can kick my right leg out and (mostly) hold my weight with it. The issue I have in being able to bend it back in after pushing it out. I also have foot drop, though I can point my toes easily enough. Again, it’s the bringing my foot back that is the issue. This device will detect when I want to bend my leg and do it for me.
+My injury is unique and so my solution may not apply to you. I have full motion on my left leg, and I can kick my right leg out and (mostly) hold my weight with it. The issue I have is being able to bend it back in after pushing it out. I also have foot drop, though I can point my toes easily enough. Again, it’s the bringing my foot back that is the issue. This device will detect when I want to bend my leg and do it for me.
 
 ## The Device
 
