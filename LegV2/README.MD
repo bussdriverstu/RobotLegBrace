@@ -1,11 +1,11 @@
 # Robot Leg Brace v2
 ## Introduction/Warning
 
-Hi. I’ve been handicapped for about 8 years now. I’ve tried to seek out treatments to be able to walk again. However, because of the type of injury and the specific motion I’ve regained, there aren’t many options out there, especially for someone on a fixed income. I took it upon myself to build my own solution. I am not an engineer nor am I a programmer. **I do not recommend anyone follow in my footsteps. THIS IS DANGEROUS.** You could blow yourself up or injure yourself doing what I did. That said, I can walk without my crutch or cane again, which is all I wanted to do. I figured I’d share my project in case anyone else, who is poor and disabled like I am, wants to try to build their own solution. 
+Hi. I’ve been handicapped for about 9 years now, I’ve tried to seek out treatments to be able to walk again. However, because of the type of injury and the specific motion I’ve regained, there aren’t many options out there, especially for someone on a fixed income. I took it upon myself to build my own solution. I am not an engineer nor am I a programmer. **I do not recommend anyone follow in my footsteps. THIS IS DANGEROUS.** You could blow yourself up or injure yourself doing what I did. That said, I can walk without my crutch or cane again, which is all I wanted to do. I figured I’d share my project in case anyone else, who is poor and disabled like I am, wants to try to build their own solution. 
 
 ## Injury and Ability
 
-My injury is unique and so my solution may not apply to you. I have full motion on my left leg, and I can kick my right leg out and (mostly) hold my weight with it. The issue I have is being able to bend it back in after pushing it out. I also have foot drop, though I can point my toes easily enough. Again, it’s the bringing my foot back that is the issue. This device will detect when I want to bend my leg and do it for me.
+My injury is unique and so my solution may not apply to you. I have full motion of my left leg; I can also straighten my right leg out and (mostly) hold my weight with it. The issue I have is being able to bend it back in after pushing it out. I also have foot drop, but I can point my toes easily enough. Again, it’s the bringing my foot back that is the issue. This device will detect when I want to bend my leg and do it for me.
 
 ## The Device
 
@@ -54,4 +54,6 @@ After installing, you should be able to copy 'code.py' and the entire 'lib' fold
 ## Notes
 
 The original design used a Raspberry Pi Zero, input/output controls, a screen, and muscle sensors. It was written in Python 3.7 using multiple libraries from adafruit, waveshare, and users on github. I will upload that version at some point as it was useful for gathering data in my walking gait and experimenting with different techniques for detecting when to bend the leg brace. For now, this is a simplified version targeted toward walking on even ground and can be built with minimal soldering and programming experience.
+
+Once you have the device working, the next challenge will be to fit it on your leg without it moving around. A tight, secure fit is needed to ensure the brace moves your leg instead of moving *on* your leg. I attached the lower portion of the brace directly to my foot drop AFO but still ahve trouble with the thigh piece sliding around. You will have to experiment on your own to get it right. Good luck.
 
