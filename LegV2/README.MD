@@ -13,11 +13,13 @@ The device uses a knee brace as a base. I’ve attached a large servo to the out
 
 To control the servo, a microcontroller reads data from an accelerometer to determine where my leg is positioned during my walking gait. When my thigh reaches a certain angle, it will tell the servo to move, bending my leg. As I move forward, the angle will change and the servo will reverse direction, allowing me to straighten my leg again.
 
+![Gait Data](GaitDataExample.png)
+
 ## Operation
 
 There are only two (three if you want to control the feedback light) controls to operate the device. A potentiometer slider will set the angle threshold that tells the servo when in the walking gait to begin bending the leg and when to straighten it again. A simple momentary push button is used to override the sensors and manually bend the leg brace. This is useful for steps or uneven ground. You can operate the device in full manual mode by moving the slider all the way to one side (which side depends on how you’ve mounted it). An on-board LED light provides visual feedback of what state the brace is in. Green means the leg should be straight, red means the knee should be bent. There is an on-board button that can cycle through brightness levels with each push; levels are off, dim, medium, and bright.
 
-## Code and Libraries
+## Installation, Code and Libraries
 
 The code is written in CircuitPython 7.3 and uses the following libraries in the lib folder:
 
