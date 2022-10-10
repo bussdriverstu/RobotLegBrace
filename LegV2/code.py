@@ -87,4 +87,4 @@ while True:
             print("you fell over, clumsy nerd")
     except:
         print("Likely a misread from the sensor. No biggie.")
-    time.sleep(.05)
+    time.sleep(.05) # An artifical speed limit on the program. I believe the accelerometer I used can report data at 300hz but I don't need it to run that fast. When I was gathering data for my walking gait I had the program spit out a csv file. In order to keep the file from being huge, I limited the data with this. It can probably be removed entirely, though.
