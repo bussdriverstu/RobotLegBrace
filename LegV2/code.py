@@ -68,7 +68,7 @@ servo.angle = down # start leg in straight position on boot
 while True:
     try:   
         pixels.fill(colorwheel(potentiometer_to_color(potentiometer.value))) # Changes led colors on slider based on the position of the potentiometer.
-        threshold = potentiometer_to_threshold(potentiometer.value)
+        threshold = potentiometer_to_threshold(potentiometer.value) # Gets the position of the slider and translates it to the y-value threshold the acceleromter must surpass for the leg to bend.
         print(str(threshold))
         if not ledButton.value: # If the on-board button is pressed, it will change the brightness multiplier for on-board LED. Values are off, dim, medium, bright.
             changeBrightness()
