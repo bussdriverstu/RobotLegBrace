@@ -53,12 +53,18 @@ def potentiometer_to_range(value):
 def potentiometer_to_color(value):
     return value / 1023 * 255 # Scale the potentiometer values (0-1023) to the colorwheel values (0-255)
 
-def sendSignal(position):
-    global lastValue
+def controlLightsBasedOnServoPosition(position): # Controls LEDs based on servo position
     if (usingMuscleSensor): # Some code to control led brightness and color for visual feedback
         ratio = position / 120
         ledBrightness = int(255 - (254 * ratio)) # Changes brightness of on-board LED based on muscle activity
-        pixels.fill(colorwheel((int(165 * ratio)))) # Changes led colors on slider based on the muscle activity
+        print("Ratio: "6 + str(ratio))
+        pixels.fill(0)
+        colorBrightness = colorwheel((int(165 * ratio)) & 255) # Colors blue to red on color wheel
+        ledCount = 4 # Number of LEDs is slider strip
+        for i in range(ledCount): # Cycle through LEDs 
+            threshold = (ledCount-i)/ledCount # Spits out evenly spaced thresholds based on number of LEDs to compare to the ratio. In this case, 4 LEDs spit out 1, 0.75, 0.5, and 0.25
+            if (ratio < threshold): # If muscle activity is within a certain threshold...
+                pixels[i] = colorBrightness # Assign color and brightness
     else:
         pixels.fill(colorwheel(potentiometer_to_color(potentiometer.value))) # Changes led colors on slider based on the position of the potentiometer.
         ledBrightness = 1
@@ -66,6 +72,10 @@ def sendSignal(position):
         onboardpixels.fill((ledBrightness, 0, 1)) # On-board led turns red when bending, brightness determined by how bent the knee is (if using muscle sensor)
     else:
         onboardpixels.fill((0, 0, ledBrightness)) # When straight, on-board led turns green if using positional sensor or blue when using muscle sensor, brightness determined by how straight the knee is (if using muscle sensor)
+    
+def sendSignal(position):
+    global lastValue
+    controlLightsBasedOnServoPosition(position) # Update LED colors and brightness
     if (position != lastValue): # Checks the last sent signal so duplicate signals aren't sent every loop. Not sure if it matters... ¯\_(ツ)_/¯
         servo.angle = position
         lastValue = position
@@ -96,9 +106,9 @@ def get_voltage(pin):
 servo.angle = down # start leg in straight position on boot
 
 while True:
-    try:        
+    try:
         if not boardButton.value: # If on board button is pressed, changes mode from accelerometer controlled to muscle sensor controlled
-                changeMode() 
+                changeMode()
         if (usingMuscleSensor):
             muscleReading = get_voltage(analogPinA0)
             rangeAdjustment = potentiometer_to_range(potentiometer.value)
@@ -131,6 +141,6 @@ while True:
                     onboardpixels.fill((0, 255 * ledBrightness, 0)) # On board led turns green when straight, brightness determined by on-board button
             else:
                 print("you fell over, clumsy nerd")
-    except:
-        print("Likely a misread from a sensor. No biggie.")
+    except Exception as e:
+        print("An error has occured, likely a misread from a sensor and can be ignored. Error: "+str(e))
     #time.sleep(.5) # I use this for debugging to read all my print statements. Remove it when using in production.
