@@ -57,7 +57,7 @@ def controlLightsBasedOnServoPosition(position): # Controls LEDs based on servo 
     if (usingMuscleSensor): # Some code to control led brightness and color for visual feedback
         ratio = position / 120
         ledBrightness = int(255 - (254 * ratio)) # Changes brightness of on-board LED based on muscle activity
-        print("Ratio: "6 + str(ratio))
+        print("Ratio: " + str(ratio))
         pixels.fill(0)
         colorBrightness = colorwheel((int(165 * ratio)) & 255) # Colors blue to red on color wheel
         ledCount = 4 # Number of LEDs is slider strip
