@@ -52,6 +52,8 @@ After installing, you should be able to copy 'code.py' and the entire 'lib' fold
 - Adafruit BNO085 9-DOF Orientation Sensor https://www.adafruit.com/product/4754
 - STEMMA QT Cable https://www.adafruit.com/product/4399
 - 1k Ohm Resistors https://www.amazon.com/MCIGICM-Values-Resistor-Assortment-Resistors/dp/B06WRQS97C/
+- ANR Corp R24 Muscle Receiver https://www.anrcorp.com/product/r24-muscle-receiver/
+- ANR Corp Wireless Muscle Sensor M40 https://www.anrcorp.com/product/m40-muscle-sense/
 
 ## Notes
 
