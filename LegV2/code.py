@@ -12,6 +12,10 @@ from adafruit_motor import servo
 import digitalio
 from analogio import AnalogIn
 
+# Calibration mode (This is an experimental mode for using both the muscle sensor and accelerometer do provide optimal straightening timing)
+calibrationMode = False
+calibratedThreshold = None
+
 # Muscle Sensor Configuration
 usingMuscleSensor = False
 analogPinA0 = AnalogIn(board.A0)
@@ -44,8 +48,16 @@ up = 1
 down = 120
 lastValue = 120
 
+def do_calibration(threshold):
+    global calibratedThreshold
+    if (calibratedThreshold == None or threshold == None):
+        calibratedThreshold = threshold
+        print(calibratedThreshold)
+    onboardpixels.fill((255, 255, 255))
+    pixels.fill(0)
+
 def potentiometer_to_threshold(value):
-    return (-1 * ((value / 1023 * 6.0) - 2)) # number multiplied is range, number subtracted determines higher bound, -1 is there to flip the slider motion to match the muscle sensor sensitivity operation. In this case, the range goes from -4 to 2.
+    return (-1 * ((value / 1023 * 6.0) - 2)) # Number multiplied is range, number subtracted determines higher bound, -1 is there to flip the slider motion to match the muscle sensor sensitivity operation. In this case, the range goes from -4 to 2.
 
 def potentiometer_to_range(value):
     return (value / 1023 * 4) + 1 # Number multiplied is range, number added determines lower bound. In this case, slider returns values between 1 and 5.
@@ -57,7 +69,7 @@ def controlLightsBasedOnServoPosition(position): # Controls LEDs based on servo 
     if (usingMuscleSensor): # Some code to control led brightness and color for visual feedback
         ratio = position / 120
         ledBrightness = int(255 - (254 * ratio)) # Changes brightness of on-board LED based on muscle activity
-        print("Ratio: " + str(ratio))
+        #print("Ratio: " + str(ratio))
         pixels.fill(0)
         colorBrightness = colorwheel((int(165 * ratio)) & 255) # Colors blue to red on color wheel
         ledCount = 4 # Number of LEDs is slider strip
@@ -79,7 +91,7 @@ def sendSignal(position):
     if (position != lastValue): # Checks the last sent signal so duplicate signals aren't sent every loop. Not sure if it matters... ¯\_(ツ)_/¯
         servo.angle = position
         lastValue = position
-        print("Signal Sent")
+        #print("Signal Sent")
 
 def changeMode():
     global usingMuscleSensor
@@ -103,16 +115,17 @@ def changeBrightness(): # This function is no longer called anywhere, but I may 
 def get_voltage(pin):
     return (pin.value / 65536) # Returns percentage of 16-bit max-value of muscle sensor.
 
-servo.angle = down # start leg in straight position on boot
+servo.angle = down # Start leg in straight position on boot
 
 while True:
     try:
+        accel_x, accel_y, accel_z = bno.acceleration
         if not boardButton.value: # If on board button is pressed, changes mode from accelerometer controlled to muscle sensor controlled
                 changeMode()
         if (usingMuscleSensor):
             muscleReading = get_voltage(analogPinA0)
             rangeAdjustment = potentiometer_to_range(potentiometer.value)
-            print("Actual Voltage %: "+str(muscleReading) + ", Range Multiplier: " + str(rangeAdjustment))
+            #print("Actual Voltage %: "+str(muscleReading) + ", Range Multiplier: " + str(rangeAdjustment))
             if (muscleReading < .04): # Ignore small muscle activity like weak twitches
                 muscleReading = 0
             mappedRangeValue = int(muscleReading * -120 * rangeAdjustment) + 120  # Maps range of muscle activity to range of servo and determines servo value to send. Servo Position = (Muscle Sensor 0-1 * Range as a negative because higher values mean straight while lower means bend * increases the range so servo is more sensitive to activity) + our starting point of the range so that 0 muscle activity means servo position is at 120, which is down.
@@ -120,15 +133,21 @@ while True:
                 mappedRangeValue = 1
             if (mappedRangeValue > 120): # Same here, but on the other extreme. If I did my math right it should never go higher than 120 anyway.
                 mappedRangeValue = 120
-            print("Adjusted Voltage %: "+str(muscleReading) + ", Signal to Send: " + str(mappedRangeValue))
+            #print("Adjusted Voltage %: "+str(muscleReading) + ", Signal to Send: " + str(mappedRangeValue))
             if (button.value): # Button acts as a safety switch, pressing it will tell the servo to keep the knee straight
                 sendSignal(down) # This value will always be 120.
+                print("Adjusted Voltage %: "+str(muscleReading) + ", Signal to Send: " + str(mappedRangeValue))
+                print("X: %0.6f  Y THRESHOLD VALUE: %0.6f Z: %0.6f  m/s^2" % (accel_x, accel_y, accel_z)) # Will use these values you determine when to ignore muscle sensor activity and just straighten the leg
             else:
-                sendSignal(mappedRangeValue) # this value will be somewhere between 120 and 1. 1 is knee completely bent, 120 is completely straight.
+                if (calibratedThreshold is None or accel_y > calibratedThreshold): # If using the accelerometer is muscle mode, straighten leg past the calibrated threshold
+                    sendSignal(mappedRangeValue) # this value will be somewhere between 120 and 1. 1 is knee completely bent, 120 is completely straight.
+                else:
+                    sendSignal(down)
+                print("calibrated: "+str(calibratedThreshold))
+                print(accel_y)
         else:
             threshold = potentiometer_to_threshold(potentiometer.value)
             print("Threshold: " + str(threshold))
-            accel_x, accel_y, accel_z = bno.acceleration
             print("X: %0.6f  Y: %0.6f Z: %0.6f  m/s^2" % (accel_x, accel_y, accel_z))
             if (accel_z > -4 and accel_z < 4): # Checking to make sure the leg is upright in case use has fallen over
                 if (accel_y > threshold or button.value): # Checks if the accelerometer reading is greater than the threshold set by the slider position or if the button is pressed, then bends the leg if either are true.
@@ -137,6 +156,11 @@ while True:
                     onboardpixels.fill((255 * ledBrightness, 0, 0)) # On board led turns red when bending, brightness determined by on-board button
                 else: # Straightens the leg
                     print("straight")
+                    if (lastValue is not down): # fire this once at the moment the button is released
+                        if (threshold == 2): # If slider is all the way at zero-position (remember that 2 is the zero-position value. i.e. full manual mode)...
+                            do_calibration(accel_y) # Take note the instance the leg straightens and assign muscle sensor straighten threshold for muscle activity mode
+                        else:
+                            do_calibration(None) # If the slider is not at -4, assign None to calibration to ignore position sensor in muscle activity mode
                     sendSignal(down)
                     onboardpixels.fill((0, 255 * ledBrightness, 0)) # On board led turns green when straight, brightness determined by on-board button
             else:
