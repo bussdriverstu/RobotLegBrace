@@ -17,7 +17,23 @@ To control the servo, a microcontroller reads data from an accelerometer to dete
 
 ## Operation
 
-There are three controls to operate the device. A potentiometer slider will set the angle threshold that tells the servo when in the walking gait to begin bending the leg and when to straighten it again. A simple momentary push button is used to override the sensors and manually bend the leg brace. This is useful for steps or uneven ground. You can operate the device in full manual mode by moving the slider all the way to one side (which side depends on how you’ve mounted it). An on-board LED light provides visual feedback of what state the brace is in. Green means the leg should be straight, red means the knee should be bent. There is an on-board button that will change operation from using the brace's position to bend to a muscle sensor. When using the muscle sensor, the light will change from green to blue and the position of the device will not affect bending and straightening. The manual bending button has also been reversed so that when you press it, the leg will straighten. This was done as a safety precaution in case interference cause the sensors to report higher readings than the muscle is sending.
+There are a few controls to operate the device. 
+
+### Manual Mode
+
+When the potentiometer slider is at the zero-position (which side that is depends on how you've mounted it) press the handheld button to bend the knee, release to straighten it. When your leg is straight, the on-board LED will be green.
+
+### Gait/Accelerometer Mode
+
+In gait detection mode, the potentiometer slider will set the angle-position threshold that tells the servo when in the walking gait to begin bending the leg and when to straighten it again. A handheld momentary push button is used to override the sensors and manually bend the leg brace. This is useful for steps or uneven ground. You can operate the device in full manual mode by moving the slider all the way to one side (which side depends on how you’ve mounted it, but it will be refered to as the zero-position). An on-board LED light provides visual feedback of what state the brace is in. Green means the leg should be straight, red means the knee should be bent. 
+
+### Muscle Activity Mode
+
+There is an on-board button that will toggle operation from using the brace's position to bend to the muscle sensor. When using the muscle sensor, the light will change from green to blue and the position of the device will not affect bending and straightening. Flexing of the muscle the sensor is positioned on will bend the knee relative to how hard to flex. The slider adjusts the sensitivity of the muscle sensor so that you can get a strong signal from weak muscles. The manual bending button has also been reversed so that when you press it the leg will straighten. This was done as a safety precaution in case interference causes the muscle sensor to report higher readings than the muscle is sending. At rest, the on-board LED will be blue instead of green.
+
+### Hybrid Mode
+
+This mode allows for muscle activity to control the knee only when the leg is positioned within a certain threshold. When enabled it will force the leg to straighten when the leg swings forward past the set threshold. To enable, set the device in Manaul Mode by moving slider all the way to the zero-position in Gait Mode (On-board LED should be green) and use the bend-button to walk. The program will record the position of your leg when you first let go of the button to straighten during each step. Then, switch to muscle activity mode (On-board LED will be blue) and it will straighten your leg at the same position you released the button during the previous step, regardless of the muscle activity registered. To disable this feature, go to Gait mode (press the on-board button so the on-board LED is green and move the slider to any position other than zero) then press and release the bend button again. A white flash will indicate when you have enabled and set, or disabled the setting successfully.
 
 ## Installation, Code and Libraries
 
