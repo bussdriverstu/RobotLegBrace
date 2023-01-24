@@ -11,7 +11,7 @@ My injury is unique and so my solution may not apply to you. I have full motion 
 
 The device uses a knee brace as a base. I’ve attached a large servo to the outer thigh portion of the brace and used an old cut-up AFO foot brace to add rigidity to the two sides. I had a friend use a 3D printer to create a pulley to attach to the servo. A chain threaded through a spring which is wrapped around the servo wheel and attaches to the shin portion of the brace via another spring (this is to absorb shock of occasional muscle spasms I can have when my leg moves or is tired). When the servo rotates, it pulls the shin up, bending the knee. 
 
-To control the servo, a microcontroller reads data from an accelerometer to determine where my leg is positioned during my walking gait. When my thigh reaches a certain angle, it will tell the servo to move, bending my leg. As I move forward, the angle will change and the servo will reverse direction, allowing me to straighten my leg again.
+To control the servo, a microcontroller reads input from various sensors and/or a user-held button and determines when to move, bending or straightening the leg. For example, in Gait/Accelerometer mode, the microcontroller reads data from an accelerometer to determine where my leg is positioned during the walking gait. When the user's thigh reaches a certain angle, it will tell the servo to move, bending my leg. As the user moves forward, the angle will change and the servo will reverse direction, straighten the leg again. See the "Operations" section for more details and controls.
 
 ![Gait Data](GaitDataExample.png)
 
