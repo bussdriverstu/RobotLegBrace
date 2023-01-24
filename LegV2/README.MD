@@ -77,3 +77,6 @@ The original design used a Raspberry Pi Zero, input/output controls, a screen, a
 
 Once you have the device working, the next challenge will be to fit it on your leg without it moving around. A tight, secure fit is needed to ensure the brace moves your leg instead of moving *on* your leg. I attached the lower portion of the brace directly to my foot drop AFO but still have trouble with the thigh piece sliding around. You will have to experiment on your own to get it right. Good luck.
 
+## Update 2023
+
+Thanks to ANR Corp sending me their muscle sensors and design help from their president, I was able to succesfully integrate muscle sensors into the latest design of the robotic leg. See the operation section for more information on how they operate. I may experiement with more than one muscle sensor in the future.
