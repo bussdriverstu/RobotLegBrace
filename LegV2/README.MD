@@ -79,4 +79,4 @@ Once you have the device working, the next challenge will be to fit it on your l
 
 ## Update 2023
 
-Thanks to ANR Corp sending me their muscle sensors and design help from their president, I was able to succesfully integrate muscle sensors into the latest design of the robotic leg. See the operation section for more information on how they operate. I may experiement with more than one muscle sensor in the future.
+Thanks to [ANR Corp](https://www.anrcorp.com/) sending me their muscle sensors and design help from their president, I was able to succesfully integrate muscle sensors into the latest design of the robotic leg. See the operation section for more information on how they operate. I may experiement with more than one muscle sensor in the future.
