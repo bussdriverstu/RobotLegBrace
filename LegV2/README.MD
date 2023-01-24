@@ -17,7 +17,7 @@ To control the servo, a microcontroller reads data from an accelerometer to dete
 
 ## Operation
 
-There are a few controls to operate the device. 
+There are a few controls to operate the device. A slider, a hand-held button, and the microcontroller's on-board button. Each have different functions depending on what operating mode the device is in.
 
 ### Manual Mode
 
