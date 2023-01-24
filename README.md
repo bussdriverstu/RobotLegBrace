@@ -7,7 +7,7 @@ A brace to assist someone with partial paralysis to bend their knee using off-th
 
 ## FAQs
 ### What plans do you have in the future for this project?
-I have some ideas for reintegrating the muscle sensors back into the leg to have more accurate bend timings. I'd also like to program different gait modes for different terrain (hiking, uneven ground, etc).
+~~I have some ideas for reintegrating the muscle sensors back into the leg to have more accurate bend timings.~~ UPDATE: Muscle sensors have been reintegrated, special thanks to [ANR Corp](https://www.anrcorp.com/) for their muscle sensors. I'd also like to program different gait modes for different terrain (hiking, uneven ground, etc).
 
 ### How long did this take?
 I started the fall of 2021 after being ghosted by a company in San Franscico that makes warehouse exoskeletons. They wanted to expand into the medical field and I volunteered to be a guinea pig. After a few conversations with the CEO I never heard from them again. I assume I lived too far away to make this feasible and they found better candidates. It took me a few months before I started testing it on myself, a little over a year to get it to the point where I could hike with it.
