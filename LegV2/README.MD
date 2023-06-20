@@ -79,4 +79,4 @@ Once you have the device working, the next challenge will be to fit it on your l
 
 ## Update 2023
 
-Thanks to [ANR Corp](https://www.anrcorp.com/) sending me their muscle sensors and design help from their president, I was able to succesfully integrate muscle sensors into the latest design of the robotic leg. See the operation section for more information on how they operate. I may experiement with more than one muscle sensor in the future.
+Thanks to [ANR Corp](https://www.anrcorp.com/) sending me their muscle sensors and design help from their president, I was able to succesfully integrate muscle sensors into the latest design of the robotic leg. See the operation section for more information on how they operate. ~~I may experiement with more than one muscle sensor in the future.~~ I've started using two sensors, one on the good leg and one on the disabled one. This gives a better picture of my gait so that the brace can respond appropriately. How a short demo of the muscle sensor, watch this video: [https://youtu.be/r48ZZ4WN5bA](https://youtu.be/r48ZZ4WN5bA)
